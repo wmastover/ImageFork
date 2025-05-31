@@ -1,70 +1,154 @@
-# Getting Started with Create React App
+# ImageFork
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A beautiful, minimal React application for forking and remixing images using AI. Create variations of your images with a sleek, dark interface inspired by modern design tools.
 
-## Available Scripts
+![ImageFork](https://via.placeholder.com/800x400/0F0F0F/ffffff?text=ImageFork)
 
-In the project directory, you can run:
+## ✨ Features
 
-### `npm start`
+- **🔄 Image Forking**: Create variations and remixes of any image
+- **🎨 AI-Powered Editing**: Transform images using natural language prompts
+- **🌧️ Beautiful Interface**: Dark, minimal design with rain animation
+- **🎵 Ambient Experience**: Built-in lofi beats and volume control
+- **⏱️ Focus Timer**: Track your creative sessions
+- **🔐 Secure API Key Management**: Your API key is stored locally
+- **📱 Responsive Design**: Works beautifully on all devices
+- **⚡ Quick Actions**: Intuitive tools for fast workflows
+- **💾 Easy Downloads**: Download your creations instantly
+- **🎭 Multiple Formats**: Support for various image sizes and formats
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🛠️ Getting Started
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Prerequisites
 
-### `npm test`
+- Node.js (version 14 or higher)
+- npm or yarn
+- OpenAI API key (get yours at [OpenAI Platform](https://platform.openai.com/account/api-keys))
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Installation
 
-### `npm run build`
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd imagefork
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. **Start the development server**
+   ```bash
+   npm start
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+4. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
 
-### `npm run eject`
+### Setting Up Your API Key
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. Click the settings icon in the top-right corner
+2. Enter your OpenAI API key
+3. Configure your preferred settings
+4. Click "Save"
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**Note**: Your API key is stored securely in your browser's local storage.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 🎯 How to Use
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Forking Images
+1. **Upload an image** or use the built-in prompt
+2. **Write a description** of how you want to transform it
+3. **Click "Fork"** to create variations
+4. **Download or fork again** to continue exploring
 
-## Learn More
+### Example Prompts
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**Image Transformation:**
+- "Make it look like a rainy night scene"
+- "Transform into an anime style artwork"
+- "Add a cyberpunk aesthetic"
+- "Convert to a watercolor painting"
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## ⚙️ Configuration Options
 
-### Code Splitting
+### Image Sizes
+- **1024x1024** - Square format
+- **1024x1536** - Portrait
+- **1536x1024** - Landscape
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Quality Settings
+- **Standard** - Balanced quality and speed
+- **HD** - Higher quality output
 
-### Analyzing the Bundle Size
+## 🎨 Technical Stack
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- **React 18** - Modern React with hooks
+- **CSS3** - Sleek animations and effects
+- **Lucide React** - Minimal icons
+- **React Icons** - Additional icon set
 
-### Making a Progressive Web App
+## 🔒 Privacy & Security
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- **Local Storage**: API keys stored only in your browser
+- **No Data Collection**: We don't store your prompts or images
+- **Direct API**: All requests go straight to OpenAI
 
-### Advanced Configuration
+## 🚀 Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Build for production:
 
-### Deployment
+```bash
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Deploy the `build` folder to any static hosting service.
 
-### `npm run build` fails to minify
+## 📋 Scripts
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- `npm start` - Development mode
+- `npm test` - Run tests
+- `npm run build` - Production build
+
+## 🎵 Audio Features
+
+- Built-in lofi beats for focus
+- Volume control
+- Session timer
+- Minimal audio player
+
+## 🛠️ Tools
+
+- Image forking
+- Timer control
+- Settings management
+- Quick actions
+
+## 🌈 Design Philosophy
+
+ImageFork embraces a dark, minimal aesthetic with:
+- Clean typography
+- Subtle animations
+- Focused interface
+- Ambient elements
+
+## 🤝 Contributing
+
+Contributions are welcome! Please read our contributing guidelines for details.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🙏 Acknowledgments
+
+- OpenAI for the incredible GPT Image 1 API
+- React team for the amazing framework
+- Lucide for the beautiful icons
+
+---
+
+**Made with ❤️ for the AI community**
+
+For support or questions, please open an issue on GitHub.
