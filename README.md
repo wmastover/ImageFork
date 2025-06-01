@@ -17,8 +17,6 @@ A beautiful, minimal React application for forking and remixing images using AI.
 - **💾 Easy Downloads**: Download your creations instantly
 - **🎭 Multiple Formats**: Support for various image sizes and formats
 
-## 🛠️ Getting Started
-
 ### Prerequisites
 
 - Node.js (version 14 or higher)
