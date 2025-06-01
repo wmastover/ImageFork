@@ -409,6 +409,15 @@ function App() {
   };
 
   const forkImage = (image) => {
+    // Add confirmation dialog
+    const proceed = window.confirm(
+      "Forking this image will clear all current images and prompts from the main page. Are you sure you want to continue?"
+    );
+
+    if (!proceed) {
+      return; // User cancelled the action
+    }
+
     // Store current state before entering fork mode
     setPreviousState({
       prompt: prompt,
