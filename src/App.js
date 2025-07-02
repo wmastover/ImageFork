@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Download, Settings, Image as ImageIcon, Wand2, Key, Loader2, AlertCircle, Upload, X, DownloadCloud, ArrowLeft, Plus, Trash2 } from 'lucide-react';
+import { Download, Settings, Image as ImageIcon, Wand2, Key, Loader2, AlertCircle, Upload, X, DownloadCloud, ArrowLeft, Plus, Trash2, Clock } from 'lucide-react';
 import { GoRepoForked } from "react-icons/go";
+import PromptHistoryPanel from './components/PromptHistoryPanel';
+import { savePromptToHistory } from './utils/promptHistory';
 import './App.css';
 
 function App() {
@@ -27,6 +29,17 @@ function App() {
   
   // History management
   const [previousState, setPreviousState] = useState(null);
+  
+  // Prompt History Panel
+  const [showHistoryPanel, setShowHistoryPanel] = useState(false);
+
+  // Handle reloading prompt from history
+  const handleReloadPrompt = (historyEntry) => {
+    setPrompt(historyEntry.prompt);
+    setImageSize(historyEntry.size);
+    setImageQuality(historyEntry.quality);
+    setError('');
+  };
 
   const saveApiKey = () => {
     localStorage.setItem('openai-api-key', apiKey);
@@ -232,6 +245,17 @@ function App() {
             }
           }
           
+          // Save to prompt history for multiple images (use first image as representative)
+          if (allImages.length > 0 && prompt.trim()) {
+            savePromptToHistory(
+              prompt,
+              allImages[0].url,
+              imageSize,
+              imageQuality,
+              allImages[0].url // Use the first generated image as thumbnail
+            );
+          }
+          
           response = { data: { data: allImages.map(img => ({ 
             url: img.url, 
             b64_json: img.url.includes('base64') ? img.url.split(',')[1] : null,
@@ -284,6 +308,18 @@ function App() {
 
           if (images.length > 0) {
             setGeneratedImages(images);
+            
+            // Save to prompt history
+            if (images[0] && prompt.trim()) {
+              savePromptToHistory(
+                prompt,
+                images[0].url,
+                imageSize,
+                imageQuality,
+                images[0].url // Use the generated image as thumbnail
+              );
+            }
+            
             // Automatically enter fork mode with the first generated image
             forkImage(images[0]);
           } else {
@@ -664,6 +700,13 @@ function App() {
               </button>
               <button
                 className="settings-btn"
+                onClick={() => setShowHistoryPanel(!showHistoryPanel)}
+                title="Prompt History"
+              >
+                <Clock size={18} />
+              </button>
+              <button
+                className="settings-btn"
                 onClick={() => setShowSettings(!showSettings)}
                 title="Settings"
               >
@@ -734,6 +777,14 @@ function App() {
             </div>
           </div>
         )}
+
+        {/* Prompt History Panel */}
+        <PromptHistoryPanel
+          isOpen={showHistoryPanel}
+          onClose={() => setShowHistoryPanel(false)}
+          onReloadPrompt={handleReloadPrompt}
+          currentPrompt={prompt}
+        />
 
         <main className="fork-main-content">
           {/* Root Image Section */}
@@ -876,6 +927,9 @@ function App() {
             <h1 onClick={() => window.location.reload()}>ImageFork</h1>
           </div>
           <div className="header-actions">
+            <button className="settings-btn" onClick={() => setShowHistoryPanel(true)} title="Prompt History">
+              <Clock size={18} />
+            </button>
             <button className="settings-btn" onClick={() => setShowSettings(true)} title="Settings">
               <Settings size={18} />
             </button>
@@ -965,7 +1019,15 @@ function App() {
             </div>
           </div>
         </div>
-      )}
+              )}
+
+      {/* Prompt History Panel */}
+      <PromptHistoryPanel
+        isOpen={showHistoryPanel}
+        onClose={() => setShowHistoryPanel(false)}
+        onReloadPrompt={handleReloadPrompt}
+        currentPrompt={prompt}
+      />
 
       <main className="main-content">
         <div className="generation-section">
