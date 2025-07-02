@@ -596,6 +596,50 @@ function App() {
     }
   };
 
+  const handleMainDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.add('drag-over');
+  };
+
+  const handleMainDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.remove('drag-over');
+  };
+
+  const handleMainDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.remove('drag-over');
+
+    const files = Array.from(e.dataTransfer.files);
+
+    files.forEach((file, index) => {
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          const newImage = {
+            id: Date.now() + Math.random(),
+            file: file,
+            preview: ev.target.result,
+            url: ev.target.result,
+            name: file.name
+          };
+
+          if (!rootImageMain && uploadedImages.length === 0 && index === 0) {
+            setRootImageMain(newImage);
+            // Automatically enter fork mode with the uploaded image
+            forkImage(newImage);
+          } else {
+            setUploadedImages(prev => [...prev, newImage]);
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  };
+
   if (forkMode) {
     return (
       <div className="App fork-mode">
@@ -982,7 +1026,11 @@ function App() {
             </div>
 
             {/* Unified Image Upload Section */}
-            <div className="upload-section">
+            <div className="upload-section"
+              onDragOver={handleMainDragOver}
+              onDragLeave={handleMainDragLeave}
+              onDrop={handleMainDrop}
+            >
               <label htmlFor="image-upload" className="upload-label">
                 <Upload className="upload-icon" />
                 Upload Image
@@ -994,6 +1042,7 @@ function App() {
                 multiple
                 onChange={(e) => handleImageUpload(e)}
                 className="upload-input"
+                style={{ display: 'none' }}
               />
               <p className="upload-note">
                 Upload images to use as a base for generation or editing. Supports multiple images.
