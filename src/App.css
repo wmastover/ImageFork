@@ -850,6 +850,13 @@ body {
   align-items: center;
 }
 
+.root-image-container {
+  position: relative;
+  display: inline-block;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
 .root-image {
   max-width: 400px;
   max-height: 300px;
@@ -858,6 +865,7 @@ body {
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   object-fit: contain;
+  display: block;
 }
 
 /* Variations Section */
@@ -1463,4 +1471,402 @@ img {
 .loading-text {
   color: rgba(255, 255, 255, 0.6);
   font-size: 0.9rem;
+}
+
+/* Inpainting Tool Styles */
+.inpainting-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  overflow: auto;
+}
+
+.inpainting-container {
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(24px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  max-width: 1400px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: auto;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+.inpainting-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 2rem 1rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.inpainting-header h3 {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.inpainting-header .close-btn {
+  background: rgba(40, 40, 40, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 0.75rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inpainting-header .close-btn:hover:not(:disabled) {
+  background: rgba(60, 60, 60, 0.9);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.inpainting-header .close-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.inpainting-content {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 2rem;
+  padding: 2rem;
+  min-height: 500px;
+}
+
+.canvas-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.canvas-container {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  position: relative;
+}
+
+.inpainting-stage {
+  cursor: crosshair;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.canvas-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+}
+
+.canvas-instructions {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.canvas-instructions p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.controls-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 1.5rem;
+  height: fit-content;
+}
+
+.brush-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.brush-controls label {
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brush-size-slider {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.brush-size-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #666666;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.brush-size-slider::-webkit-slider-thumb:hover {
+  background: #555555;
+  transform: scale(1.1);
+}
+
+.brush-size-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #666666;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.clear-mask-btn {
+  background: rgba(120, 120, 120, 0.2);
+  border: 1px solid rgba(120, 120, 120, 0.4);
+  color: rgba(255, 255, 255, 0.8);
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.clear-mask-btn:hover:not(:disabled) {
+  background: rgba(120, 120, 120, 0.3);
+  border-color: rgba(120, 120, 120, 0.6);
+  color: #ffffff;
+}
+
+.clear-mask-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.prompt-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.prompt-section label {
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.inpainting-prompt-input {
+  width: 100%;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  resize: vertical;
+  min-height: 100px;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  line-height: 1.4;
+}
+
+.inpainting-prompt-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.inpainting-prompt-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.inpainting-prompt-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.action-buttons .cancel-btn {
+  flex: 1;
+  background: rgba(120, 120, 120, 0.2);
+  border: 1px solid rgba(120, 120, 120, 0.4);
+  color: rgba(255, 255, 255, 0.8);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.action-buttons .cancel-btn:hover:not(:disabled) {
+  background: rgba(120, 120, 120, 0.3);
+  border-color: rgba(120, 120, 120, 0.6);
+  color: #ffffff;
+}
+
+.apply-btn {
+  flex: 2;
+  background: #666666;
+  border: 1px solid #666666;
+  color: #ffffff;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.apply-btn:hover:not(:disabled) {
+  background: #555555;
+  border-color: #555555;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(102, 102, 102, 0.3);
+}
+
+.apply-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Add inpainting button to image actions */
+.inpainting-btn {
+  padding: 0.75rem;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  min-height: auto;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inpainting-btn:hover {
+  background: rgba(0, 0, 0, 0.9);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+/* Responsive design for inpainting tool */
+@media (max-width: 1200px) {
+  .inpainting-content {
+    grid-template-columns: 1fr 350px;
+  }
+}
+
+@media (max-width: 968px) {
+  .inpainting-overlay {
+    padding: 1rem;
+  }
+  
+  .inpainting-content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+  
+  .controls-section {
+    order: -1;
+  }
+  
+  .canvas-container {
+    min-height: 300px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .action-buttons .cancel-btn,
+  .apply-btn {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .inpainting-header {
+    padding: 1.5rem 1rem 1rem 1rem;
+  }
+  
+  .inpainting-header h3 {
+    font-size: 1.25rem;
+  }
+  
+  .inpainting-content {
+    padding: 1rem;
+  }
+  
+  .canvas-container {
+    min-height: 250px;
+    padding: 0.75rem;
+  }
+  
+  .controls-section {
+    padding: 1rem;
+  }
 }

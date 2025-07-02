@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Download, Settings, Image as ImageIcon, Wand2, Key, Loader2, AlertCircle, Upload, X, DownloadCloud, ArrowLeft, Plus, Trash2 } from 'lucide-react';
+import { Download, Settings, Image as ImageIcon, Wand2, Key, Loader2, AlertCircle, Upload, X, DownloadCloud, ArrowLeft, Plus, Trash2, Eraser } from 'lucide-react';
 import { GoRepoForked } from "react-icons/go";
+import InpaintingTool from './InpaintingTool';
 import './App.css';
 
 function App() {
@@ -27,6 +28,10 @@ function App() {
   
   // History management
   const [previousState, setPreviousState] = useState(null);
+  
+  // Inpainting state
+  const [inpaintingMode, setInpaintingMode] = useState(false);
+  const [inpaintingImage, setInpaintingImage] = useState(null);
 
   const saveApiKey = () => {
     localStorage.setItem('openai-api-key', apiKey);
@@ -488,6 +493,27 @@ function App() {
     }
   };
 
+  const openInpainting = (image) => {
+    setInpaintingImage(image);
+    setInpaintingMode(true);
+  };
+
+  const closeInpainting = () => {
+    setInpaintingMode(false);
+    setInpaintingImage(null);
+  };
+
+  const handleInpaintingComplete = (resultImage) => {
+    // Add the result to generated images
+    setGeneratedImages(prev => [resultImage, ...prev]);
+    
+    // Close inpainting mode
+    closeInpainting();
+    
+    // Optionally enter fork mode with the result
+    forkImage(resultImage);
+  };
+
   const downloadImage = async (imageUrl, index = 0) => {
     if (!imageUrl) return;
 
@@ -738,7 +764,18 @@ function App() {
         <main className="fork-main-content">
           {/* Root Image Section */}
           <div className="root-image-section">
-            <img src={rootImage.url} alt="Original image" className="root-image" />
+            <div className="root-image-container">
+              <img src={rootImage.url} alt="Original image" className="root-image" />
+              <div className="image-actions">
+                <button 
+                  onClick={() => openInpainting(rootImage)} 
+                  className="inpainting-btn"
+                  title="Erase & Replace"
+                >
+                  <Eraser />
+                </button>
+              </div>
+            </div>
           </div>
 
           {/* Variations Section */}
@@ -834,6 +871,13 @@ function App() {
                           <Download />
                         </button>
                         <button 
+                          onClick={() => openInpainting(variation.result)} 
+                          className="inpainting-btn"
+                          title="Erase & Replace"
+                        >
+                          <Eraser />
+                        </button>
+                        <button 
                           onClick={() => forkImage(variation.result)} 
                           className="result-fork-btn"
                           title="Use as base image"
@@ -855,6 +899,18 @@ function App() {
             </div>
           )}
         </main>
+
+        {/* Inpainting Tool */}
+        {inpaintingMode && inpaintingImage && (
+          <InpaintingTool
+            image={inpaintingImage}
+            onClose={closeInpainting}
+            onComplete={handleInpaintingComplete}
+            apiKey={apiKey}
+            imageSize={imageSize}
+            imageQuality={imageQuality}
+          />
+        )}
       </div>
     );
   }
@@ -1131,6 +1187,13 @@ function App() {
                         <Download />
                       </button>
                       <button 
+                        onClick={() => openInpainting(image)} 
+                        className="inpainting-btn" 
+                        title="Erase & Replace"
+                      >
+                        <Eraser />
+                      </button>
+                      <button 
                         onClick={() => forkImage(image)} 
                         className="fork-btn" 
                         title="Fork this image"
@@ -1146,6 +1209,18 @@ function App() {
           )}
         </div>
       </main>
+
+      {/* Inpainting Tool */}
+      {inpaintingMode && inpaintingImage && (
+        <InpaintingTool
+          image={inpaintingImage}
+          onClose={closeInpainting}
+          onComplete={handleInpaintingComplete}
+          apiKey={apiKey}
+          imageSize={imageSize}
+          imageQuality={imageQuality}
+        />
+      )}
     </div>
   );
 }
