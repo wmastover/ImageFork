@@ -32,6 +32,43 @@ body {
   z-index: -2;
 }
 
+/* Color-changing overlay */
+.color-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(1px);
+  z-index: -1;
+  animation: colorShift 30s infinite;
+}
+
+@keyframes colorShift {
+  0% {
+    background: rgba(0, 0, 0, 0.4);
+  }
+  16.66% {
+    background: rgba(50, 0, 100, 0.4);
+  }
+  33.33% {
+    background: rgba(0, 50, 100, 0.4);
+  }
+  50% {
+    background: rgba(100, 0, 50, 0.4);
+  }
+  66.66% {
+    background: rgba(100, 50, 0, 0.4);
+  }
+  83.33% {
+    background: rgba(0, 100, 50, 0.4);
+  }
+  100% {
+    background: rgba(0, 0, 0, 0.4);
+  }
+}
+
 .App::before {
   content: '';
   position: fixed;

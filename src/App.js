@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './App.css';
 import { 
   Download, 
   Settings, 
@@ -72,7 +75,7 @@ const handleReloadPrompt = (historyEntry) => {
   };
 
   // Load settings on component mount
-  React.useEffect(() => {
+  useEffect(() => {
     const savedSettings = localStorage.getItem('image-settings');
     if (savedSettings) {
       try {
@@ -728,6 +731,7 @@ const handleReloadPrompt = (historyEntry) => {
         >
           <source src="https://firebasestorage.googleapis.com/v0/b/vybecode-36007.firebasestorage.app/o/videos%2F1745753806094_Mountain.mp4?alt=media&token=9109be88-a329-477e-b74f-e2bc73a3e340" type="video/mp4" />
         </video>
+        <div className="color-overlay"></div>
         <header className="app-header">
           <div className="header-content">
             <div className="logo-section">
@@ -991,6 +995,7 @@ const handleReloadPrompt = (historyEntry) => {
       >
         <source src="https://firebasestorage.googleapis.com/v0/b/vybecode-36007.firebasestorage.app/o/videos%2F1745753806094_Mountain.mp4?alt=media&token=9109be88-a329-477e-b74f-e2bc73a3e340" type="video/mp4" />
       </video>
+      <div className="color-overlay"></div>
       <header className="app-header">
         <div className="header-content">
           <div className="logo-section">
